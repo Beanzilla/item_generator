@@ -2,7 +2,7 @@
 
 This mod provides special chests which produce items automatically.
 
-See my [Item Generator Addon](#) mod which uses the API this mod provides to incorperate some other mods not just default.
+See my [Item Generator Addon](https://github.com/Beanzilla/item_generator_addon) mod which uses the API this mod provides to incorperate some other mods not just default.
 
 ## Goals
 
