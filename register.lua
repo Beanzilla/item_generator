@@ -1,5 +1,3 @@
--- Attempt to just get the internals to enable calls to work (Not needed, we got our own which will always be there)
---local default = rawget(_G, "default") or nil
 -- support for MT game translation.
 local S = minetest.get_translator("item_generator")
 
@@ -21,6 +19,7 @@ function igen_internal.register_chest(prefixed_name, d)
     def.on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         meta:set_string("infotext", S("Generator "..igen_internal.firstToUpper(infotext_name)))
+        meta:set_string("name", name)
         meta:set_string("owner", "")
         meta:set_string("product", def.product)
         meta:set_int("product_amt", def.product_amt)

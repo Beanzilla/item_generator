@@ -3,6 +3,9 @@ local ig_modpath = minetest.get_modpath("item_generator")
 igen = {} -- For API
 igen_internal = {} -- For internals (Do not expose to public, they should use the API)
 
+igen_internal.defualt = minetest.get_modpath("default") or nil
+igen_internal.mcl_core = minetest.get_modpath("mcl_core") or nil
+
 -- Assistants
 function igen_internal.firstToUpper(str)
     return (str:gsub("^%l", string.upper))
@@ -33,7 +36,7 @@ dofile(ig_modpath.."/register.lua")
 dofile(ig_modpath.."/api.lua")
 
 -- If enabled populate a few generators
-if igen_pregenerate_defaults == true and minetest.get_modpath("default") then
+if igen_pregenerate_defaults == true and igen_internal.default ~= nil then
     igen.add_generator("default:cobble", 2, 20)
     -- Issue: This only allow Apple Trees to be used as generators
     igen.add_generator("default:tree", 1, 25)
@@ -79,7 +82,7 @@ if igen_pregenerate_defaults == true and minetest.get_modpath("default") then
     igen.add_generator("default:ice", 1, 15)
     igen.add_generator("default:snow", 9, 9)
     minetest.log("action", "[igen] default loaded!")
-elseif igen_pregenerate_defaults == true and minetest.get_modpath("mcl_core") then
+elseif igen_pregenerate_defaults == true and igen_internal.mcl_core ~= nil then
     igen.add_generator("mcl_core:tree", 1, 25)
     igen.add_generator("mcl_core:dirt", 1, 10)
     igen.add_generator("mcl_core:sand", 2, 21)
@@ -164,5 +167,5 @@ elseif igen_pregenerate_defaults == true and minetest.get_modpath("mcl_core") th
     igen.add_generator("mcl_throwing:ender_pearl", 1, 30)
     igen.add_generator("mcl_throwing:snowball", 1, 10)
     igen.add_generator("mcl_throwing:egg", 1, 12)
-    minetest.log("action", "[igen] mineclone2 loaded!")
+    minetest.log("action", "[igen] MineClone2 loaded!")
 end

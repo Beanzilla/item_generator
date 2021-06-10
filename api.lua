@@ -6,7 +6,7 @@ local S = minetest.get_translator("item_generator")
 function igen.add_generator(itemstring, perprocess, processdelay)
     -- Here is where we would add a generator to crafting
     local infotext_name = igen_internal.split(itemstring, ':')[2]
-    if not igen_mcl2_support then
+    if igen_internal.default ~= nil then
         igen_internal.register_chest("item_generator:generator_"..infotext_name, {
             description = S("Generator "..igen_internal.firstToUpper(infotext_name)),
             tiles = {
@@ -47,7 +47,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
                 product_rate = processdelay,
             })
         end
-    else
+    elseif igen_internal.mcl_core ~= nil then
         igen_internal.register_insecure_chest("item_generator:generator_"..infotext_name.."_pub", {
             description = S("Generator "..igen_internal.firstToUpper(infotext_name)),
             tiles = {
@@ -61,7 +61,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
             sounds = igen_internal.node_sound_wood_defaults(),
             sound_open = "igen_chest_open",
             sound_close = "igen_chest_close",
-            groups = {choppy = 2, oddly_breakable_by_hand = 2},
+            groups = {handy=1, axey=1, deco_block=1, material_wood=1, flammable=-1},
             protected = true,
             product = itemstring,
             product_amt = perprocess,
@@ -70,7 +70,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
     end
 
     -- Make a craft simular to the locked chest
-    if not igen_mcl2_support then
+    if igen_internal.default ~= nil then
         minetest.register_craft({
             output = "item_generator:generator_"..infotext_name,
             recipe = {
@@ -89,9 +89,9 @@ function igen.add_generator(itemstring, perprocess, processdelay)
                 }
             })
         end
-    else
+    elseif igen_internal.mcl_core ~= nil then
         minetest.register_craft({
-            output = "item_generator:generator_"..infotext_name,
+            output = "item_generator:generator_"..infotext_name.."_pub",
             recipe = {
                 {"group:wood", itemstring, "group:wood"},
                 {"group:wood", "", "group:wood"},
@@ -101,7 +101,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
     end
 
     -- Also include conversion methods for locked chests to item generators
-    if not igen_mcl2_support then
+    if igen_internal.default ~= nil then
         minetest.register_craft({
             type = "shapeless",
             output = "item_generator:generator_"..infotext_name,
@@ -134,7 +134,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
                 cooktime = 5,
             })
         end
-    else
+    elseif igen_internal.mcl_core ~= nil then
         minetest.register_craft({
             type = "shapeless",
             output = "item_generator:generator_"..infotext_name.."_pub",
@@ -153,12 +153,20 @@ function igen.add_generator(itemstring, perprocess, processdelay)
     end
 
     -- Fuel Option, Incase you really want to dispose of the generator
-    minetest.register_craft({
-        type = "fuel",
-        recipe = "item_generator:generator_"..infotext_name,
-        burntime = 35, -- About 5 more seconds compared to default:chest and default:chest_locked
-    })
-    if igen_allow_insecure_generators then
+    if igen_internal.default ~= nil then
+        minetest.register_craft({
+            type = "fuel",
+            recipe = "item_generator:generator_"..infotext_name,
+            burntime = 35, -- About 5 more seconds compared to default:chest and default:chest_locked
+        })
+        if igen_allow_insecure_generators then
+            minetest.register_craft({
+                type = "fuel",
+                recipe = "item_generator:generator_"..infotext_name.."_pub",
+                burntime = 35, -- About 5 more seconds compared to default:chest and default:chest_locked
+            })
+        end
+    elseif igen_internal.mcl_core ~= nil then
         minetest.register_craft({
             type = "fuel",
             recipe = "item_generator:generator_"..infotext_name.."_pub",
