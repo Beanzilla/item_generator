@@ -25,7 +25,7 @@ This mod was based off of the `defualt:chest_locked` to provide simple security 
 
 Get a `default:gold_ingot` and stick it into crafting table to create a [Skeleton Key](https://wiki.minetest.net/Skeleton_Key).
 
-Use the key on the chest (right click) which should convert to a plain Key.
+Use the key on the chest (left click) which should convert to a plain Key.
 
 Then give that Key to whom you wish to grant access to **THAT** generator (This doesn't allow them access to every generator, only to just that one).
 
