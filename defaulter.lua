@@ -80,7 +80,6 @@ function igen_internal.node_sound_wood_defaults(table)
 			{name = "igen_wood_footstep", gain = 0.3}
 	table.dug = table.dug or
 			{name = "igen_wood_footstep", gain = 1.0}
-	default.node_sound_defaults(table)
 	return table
 end
 

@@ -207,8 +207,8 @@ end
 
 -- ==================================================================================================================================================================== --
 
--- Our "Unsecure" generator (Mainly used in mineclone2 since there is no security)
-function igen_internal.register_unsecure_chest(prefixed_name, d)
+-- Our "Insecure" generator (Mainly used in mineclone2 since there is no security)
+function igen_internal.register_insecure_chest(prefixed_name, d)
 	local name = prefixed_name:sub(1,1) == ':' and prefixed_name:sub(2,-1) or prefixed_name
     local infotext_name = igen_internal.split(name, ':')[2]
     infotext_name = igen_internal.split(infotext_name, '_')[2]
@@ -222,8 +222,7 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
 
     def.on_construct = function(pos)
         local meta = minetest.get_meta(pos)
-        meta:set_string("infotext", S("Generator "..igen_internal.firstToUpper(infotext_name)))
-        meta:set_string("owner", "")
+        meta:set_string("infotext", S("Public Generator "..igen_internal.firstToUpper(infotext_name)))
         meta:set_string("product", def.product)
         meta:set_int("product_amt", def.product_amt)
         meta:set_int("product_rate", def.product_rate)
@@ -234,7 +233,7 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
     def.after_place_node = function(pos, placer)
         local meta = minetest.get_meta(pos)
         meta:set_string("owner", placer:get_player_name() or "")
-        meta:set_string("infotext", S("Generator "..igen_internal.firstToUpper(infotext_name).." (owned by @1)", meta:get_string("owner")))
+        meta:set_string("infotext", S("Public Generator "..igen_internal.firstToUpper(infotext_name)))
         -- Start a timer
         minetest.get_node_timer(pos):start(1)
     end
@@ -257,16 +256,16 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
                 end
                 process = 0
                 if igen_log_item_generation then
-                    minetest.log("action", "[item_generator] generator_"..igen_internal.split(meta:get_string("product"), ':')[2].." at ("..pos.x..", "..pos.y..", "..pos.z..") produced "..meta:get_int("product_amt").." of "..meta:get_string("product"))
+                    minetest.log("action", "[item_generator] generator_"..igen_internal.split(meta:get_string("product"), ':')[2].."_pub at ("..pos.x..", "..pos.y..", "..pos.z..") produced "..meta:get_int("product_amt").." of "..meta:get_string("product"))
                 end
             end
             meta:set_int("product_at", process)
             -- Show the percent of the item completion.
             local percent = (process / meta:get_int("product_rate")) * 100
             local percent_format = string.format("%.2f %%", percent)
-            meta:set_string("infotext", S("Generator "..igen_internal.firstToUpper(infotext_name).." (owned by @1) [@2%]", meta:get_string("owner"), percent_format))
+            meta:set_string("infotext", S("Public Generator "..igen_internal.firstToUpper(infotext_name).." [@1%]", percent_format))
         else
-            meta:set_string("infotext", S("Generator "..igen_internal.firstToUpper(infotext_name).." (owned by @1) [FULL]", meta:get_string("owner")))
+            meta:set_string("infotext", S("Public Generator "..igen_internal.firstToUpper(infotext_name).." [FULL]"))
             -- Note: The node timer still will be fired (It's just nothing will happen)
         end
         return true
@@ -287,7 +286,7 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
         -- I need to get default chest formspec and open_chests moved over to internal, right now it would fail here. :(
         minetest.after(0.2, minetest.show_formspec,
                 clicker:get_player_name(),
-                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2], igen_internal.chest.get_chest_formspec(pos))
+                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_pub", igen_internal.chest.get_chest_formspec(pos))
         igen_internal.chest.open_chests[clicker:get_player_name()] = { pos = pos,
                 sound = def.sound_close, swap = name }
     end
@@ -297,21 +296,21 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
 			to_list, to_index, count, player)
         if igen_log_item_movements then
 		    minetest.log("action", "[item_generator] ".. player:get_player_name() ..
-    			" moves stuff in generator at " .. minetest.pos_to_string(pos))
+    			" moves stuff in pub generator at " .. minetest.pos_to_string(pos))
         end
 	end
 	def.on_metadata_inventory_put = function(pos, listname, index, stack, player)
         if igen_log_item_movements then
 		    minetest.log("action", "[item_generator] ".. player:get_player_name() ..
     			" moves " .. stack:get_name() ..
-	    		" to generator at " .. minetest.pos_to_string(pos))
+	    		" to pub generator at " .. minetest.pos_to_string(pos))
         end
 	end
 	def.on_metadata_inventory_take = function(pos, listname, index, stack, player)
         if igen_log_item_movements then
             minetest.log("action", "[item_generator] ".. player:get_player_name() ..
                 " takes " .. stack:get_name() ..
-                " from generator at " .. minetest.pos_to_string(pos))
+                " from pub generator at " .. minetest.pos_to_string(pos))
         end
 	end
 
@@ -343,7 +342,7 @@ function igen_internal.register_unsecure_chest(prefixed_name, d)
 	def_closed.tiles[5] = def.tiles[3] -- drawtype to make them match the mesh
 	def_closed.tiles[3] = def.tiles[3].."^[transformFX"
 
-	minetest.register_node(":item_generator:generator_"..igen_internal.split(def.product, ':')[2], def_closed)
-	minetest.register_node(":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_open", def_opened)
+	minetest.register_node(":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_pub", def_closed)
+	minetest.register_node(":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_pub_open", def_opened)
 
 end
