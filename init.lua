@@ -83,7 +83,6 @@ elseif igen_pregenerate_defaults == true and minetest.get_modpath("mcl_core") th
     igen.add_generator("mcl_core:tree", 1, 25)
     igen.add_generator("mcl_core:dirt", 1, 10)
     igen.add_generator("mcl_core:sand", 2, 21)
-    --[[
     igen.add_generator("mcl_farming:wheat_item", 1, 12)
     igen.add_generator("mcl_farming:carrot_item", 1, 12)
     igen.add_generator("mcl_farming:beetroot_item", 1, 12)
@@ -165,6 +164,5 @@ elseif igen_pregenerate_defaults == true and minetest.get_modpath("mcl_core") th
     igen.add_generator("mcl_throwing:ender_pearl", 1, 30)
     igen.add_generator("mcl_throwing:snowball", 1, 10)
     igen.add_generator("mcl_throwing:egg", 1, 12)
-    ]]--
     minetest.log("action", "[igen] mineclone2 loaded!")
 end

@@ -34,7 +34,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
                     "igen_chest_top.png",
                     "igen_chest_side.png",
                     "igen_chest_side.png",
-                    "igen_chest_lock.png",
+                    "igen_chest_front.png",
                     "igen_chest_inside.png"
                 },
                 sounds = igen_internal.node_sound_wood_defaults(),
@@ -55,7 +55,7 @@ function igen.add_generator(itemstring, perprocess, processdelay)
                 "igen_chest_top.png",
                 "igen_chest_side.png",
                 "igen_chest_side.png",
-                "igen_chest_lock.png",
+                "igen_chest_front.png",
                 "igen_chest_inside.png"
             },
             sounds = igen_internal.node_sound_wood_defaults(),

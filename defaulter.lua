@@ -4,6 +4,14 @@ igen_internal.chest = {}
 
 local S = minetest.get_translator("item_generator")
 
+function igen_internal.get_hotbar_bg(x,y)
+	local out = ""
+	for i=0,7,1 do
+		out = out .."image["..x+i..","..y..";1,1;igen_gui_hb_bg.png]"
+	end
+	return out
+end
+
 function igen_internal.chest.get_chest_formspec(pos)
 	local spos = pos.x .. "," .. pos.y .. "," .. pos.z
 	local formspec =
@@ -13,7 +21,7 @@ function igen_internal.chest.get_chest_formspec(pos)
 		"list[current_player;main;0,6.08;8,3;8]" ..
 		"listring[nodemeta:" .. spos .. ";main]" ..
 		"listring[current_player;main]" ..
-		default.get_hotbar_bg(0,4.85)
+		igen_internal.get_hotbar_bg(0,4.85)
 	return formspec
 end
 

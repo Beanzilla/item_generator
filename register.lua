@@ -175,7 +175,7 @@ function igen_internal.register_chest(prefixed_name, d)
 	local def_opened = table.copy(def)
 	local def_closed = table.copy(def)
 
-	def_opened.mesh = "chest_open.obj"
+	def_opened.mesh = "igen_chest_open.obj"
 	for i = 1, #def_opened.tiles do
 		if type(def_opened.tiles[i]) == "string" then
 			def_opened.tiles[i] = {name = def_opened.tiles[i], backface_culling = true}
@@ -317,7 +317,7 @@ function igen_internal.register_insecure_chest(prefixed_name, d)
 	local def_opened = table.copy(def)
 	local def_closed = table.copy(def)
 
-	def_opened.mesh = "chest_open.obj"
+	def_opened.mesh = "igen_chest_open.obj"
 	for i = 1, #def_opened.tiles do
 		if type(def_opened.tiles[i]) == "string" then
 			def_opened.tiles[i] = {name = def_opened.tiles[i], backface_culling = true}
