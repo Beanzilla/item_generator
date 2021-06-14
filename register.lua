@@ -206,7 +206,7 @@ end
 
 -- ==================================================================================================================================================================== --
 
--- Our "Insecure" generator (Mainly used in mineclone2 since there is no security)
+-- Our "Insecure" generator (I.E. A Public Generator)
 function igen_internal.register_insecure_chest(prefixed_name, d)
 	local name = prefixed_name:sub(1,1) == ':' and prefixed_name:sub(2,-1) or prefixed_name
     local infotext_name = igen_internal.split(name, ':')[2]
