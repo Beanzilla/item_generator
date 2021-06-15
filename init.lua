@@ -29,9 +29,6 @@ end
 -- Call out to settings
 dofile(ig_modpath.."/settings.lua")
 
--- Call out to defaulter
-dofile(ig_modpath.."/defaulter.lua")
-
 -- Call out to register
 dofile(ig_modpath.."/register.lua")
 

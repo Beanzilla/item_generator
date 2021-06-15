@@ -1,5 +1,5 @@
 -- Attempt to just get the internals to enable calls to work (Auto-Detect)
--- local default = rawget(_G, "default") or nil
+local default = rawget(_G, "default") or nil
 -- support for MT game translation.
 local S = minetest.get_translator("item_generator")
 
@@ -10,16 +10,16 @@ function igen.add_generator(itemstring, perprocess, processdelay)
         igen_internal.register_chest("item_generator:generator_"..infotext_name, {
             description = S("Generator "..igen_internal.firstToUpper(infotext_name)),
             tiles = {
-                "igen_chest_top.png",
-                "igen_chest_top.png",
-                "igen_chest_side.png",
-                "igen_chest_side.png",
-                "igen_chest_lock.png",
-                "igen_chest_inside.png"
+                "default_chest_top.png",
+                "default_chest_top.png",
+                "default_chest_side.png",
+                "default_chest_side.png",
+                "default_chest_lock.png",
+                "default_chest_inside.png"
             },
-            sounds = igen_internal.node_sound_wood_defaults(),
-            sound_open = "igen_chest_open",
-            sound_close = "igen_chest_close",
+            sounds = default.node_sound_wood_defaults(),
+            sound_open = "default_chest_open",
+            sound_close = "default_chest_close",
             groups = {choppy = 2, oddly_breakable_by_hand = 2},
             protected = true,
             product = itemstring,
@@ -30,16 +30,16 @@ function igen.add_generator(itemstring, perprocess, processdelay)
             igen_internal.register_insecure_chest("item_generator:generator_"..infotext_name.."_pub", {
                 description = S("Public Generator "..igen_internal.firstToUpper(infotext_name)),
                 tiles = {
-                    "igen_chest_top.png",
-                    "igen_chest_top.png",
-                    "igen_chest_side.png",
-                    "igen_chest_side.png",
-                    "igen_chest_front.png",
-                    "igen_chest_inside.png"
+                    "default_chest_top.png",
+                    "default_chest_top.png",
+                    "default_chest_side.png",
+                    "default_chest_side.png",
+                    "default_chest_front.png",
+                    "default_chest_inside.png"
                 },
-                sounds = igen_internal.node_sound_wood_defaults(),
-                sound_open = "igen_chest_open",
-                sound_close = "igen_chest_close",
+                sounds = default.node_sound_wood_defaults(),
+                sound_open = "default_chest_open",
+                sound_close = "default_chest_close",
                 groups = {choppy = 2, oddly_breakable_by_hand = 2},
                 protected = true,
                 product = itemstring,

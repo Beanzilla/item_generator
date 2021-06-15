@@ -1,7 +1,7 @@
 -- support for MT game translation.
 local S = minetest.get_translator("item_generator")
 
--- See defaulter.lua for our new register functions
+local default = rawget(_G, "default") or nil
 
 -- A Standard "Secure" generator
 function igen_internal.register_chest(prefixed_name, d)
@@ -73,25 +73,25 @@ function igen_internal.register_chest(prefixed_name, d)
     end
     def.allow_metadata_inventory_move = function(pos, from_list, from_index,
             to_list, to_index, count, player)
-        if not igen_internal.can_interact_with_node(player, pos) then
+        if not default.can_interact_with_node(player, pos) then
             return 0
         end
         return count
     end
     def.allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        if not igen_internal.can_interact_with_node(player, pos) then
+        if not default.can_interact_with_node(player, pos) then
             return 0
         end
         return stack:get_count()
     end
     def.allow_metadata_inventory_take = function(pos, listname, index, stack, player)
-        if not igen_internal.can_interact_with_node(player, pos) then
+        if not default.can_interact_with_node(player, pos) then
             return 0
         end
         return stack:get_count()
     end
     def.on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-        if not igen_internal.can_interact_with_node(clicker, pos) then
+        if not default.can_interact_with_node(clicker, pos) then
             return itemstack
         end
 
@@ -99,8 +99,8 @@ function igen_internal.register_chest(prefixed_name, d)
                 pos = pos, max_hear_distance = 10}, true)
         minetest.after(0.2, minetest.show_formspec,
                 clicker:get_player_name(),
-                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2], igen_internal.chest.get_chest_formspec(pos))
-        igen_internal.chest.open_chests[clicker:get_player_name()] = { pos = pos,
+                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2], default.chest.get_chest_formspec(pos))
+        default.chest.open_chests[clicker:get_player_name()] = { pos = pos,
                 sound = def.sound_close, swap = name }
     end
     def.on_blast = function() end
@@ -125,7 +125,7 @@ function igen_internal.register_chest(prefixed_name, d)
         minetest.show_formspec(
             player:get_player_name(),
             ":item_generator:generator_"..igen_internal.split(def.product, ':')[2],
-            igen_internal.chest.get_chest_formspec(pos)
+            default.chest.get_chest_formspec(pos)
         )
     end
     def.on_skeleton_key_use = function(pos, player, newsecret)
@@ -174,7 +174,7 @@ function igen_internal.register_chest(prefixed_name, d)
 	local def_opened = table.copy(def)
 	local def_closed = table.copy(def)
 
-	def_opened.mesh = "igen_chest_open.obj"
+	def_opened.mesh = "chest_open.obj"
 	for i = 1, #def_opened.tiles do
 		if type(def_opened.tiles[i]) == "string" then
 			def_opened.tiles[i] = {name = def_opened.tiles[i], backface_culling = true}
@@ -282,11 +282,10 @@ function igen_internal.register_insecure_chest(prefixed_name, d)
     def.on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         minetest.sound_play(def.sound_open, {gain = 0.3,
                 pos = pos, max_hear_distance = 10}, true)
-        -- I need to get default chest formspec and open_chests moved over to internal, right now it would fail here. :(
         minetest.after(0.2, minetest.show_formspec,
                 clicker:get_player_name(),
-                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_pub", igen_internal.chest.get_chest_formspec(pos))
-        igen_internal.chest.open_chests[clicker:get_player_name()] = { pos = pos,
+                ":item_generator:generator_"..igen_internal.split(def.product, ':')[2].."_pub", default.chest.get_chest_formspec(pos))
+        default.chest.open_chests[clicker:get_player_name()] = { pos = pos,
                 sound = def.sound_close, swap = name }
     end
     def.on_blast = function() end
@@ -316,7 +315,7 @@ function igen_internal.register_insecure_chest(prefixed_name, d)
 	local def_opened = table.copy(def)
 	local def_closed = table.copy(def)
 
-	def_opened.mesh = "igen_chest_open.obj"
+	def_opened.mesh = "chest_open.obj"
 	for i = 1, #def_opened.tiles do
 		if type(def_opened.tiles[i]) == "string" then
 			def_opened.tiles[i] = {name = def_opened.tiles[i], backface_culling = true}
