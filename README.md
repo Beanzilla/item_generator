@@ -1,4 +1,34 @@
-# Item Generator
+# Item Generator [![ContentDB](https://content.minetest.net/packages/ApolloX/item_generator/shields/downloads/)](https://content.minetest.net/packages/ApolloX/item_generator/)
+
+Dependencies
+
+Required
+    default 
+
+Information
+
+Type
+    Mod
+Technical Name
+    item_generator
+License
+    MIT 
+Added
+    2021-06-14 16:43 UTC
+Maintainers
+
+    ApolloX 
+Provides
+    item_generator 
+
+Releases
+
+    1.0.0 Initial
+    [5b5fc] created 2021-06-15.
+
+Threads
+Package approval comments by wsor4035
+
 
 This mod provides special chests which produce items automatically.
 
